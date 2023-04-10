@@ -7,10 +7,14 @@ import TodoModal from "./Modal/TodoModal";
 export default function TodoList({ toDoList }) {
   const [listItem, setListItem] = useState(toDoList);
   const [isOpenList, setIsOpenList] = useState(false);
+  const [todos, setTodos] = useState(listItem.todos);
   const completedCount = listItem.todos.filter((todo) => todo.completed).length;
   const remainingCount = listItem.todos.length - completedCount;
-  // const completedCount = 1;
-  // const remainingCount = 1;
+  const [temp, setTemp] = useState(toDoList);
+
+  getItem = (item) => {
+    setTemp(item);
+  };
 
   toggleList = () => {
     setIsOpenList(!isOpenList);
@@ -23,11 +27,18 @@ export default function TodoList({ toDoList }) {
         onRequestClose={() => this.toggleList()}
         visible={isOpenList}
       >
-        <TodoModal listItem={listItem} closeModal={() => this.toggleList()} updateList={updateList}/>
+        <TodoModal
+          itemModal={temp}
+          closeModal={() => this.toggleList()}
+          updateList={updateList}
+        />
       </Modal>
       <TouchableOpacity
         style={[styles.container, { backgroundColor: listItem.color }]}
-        onPress={() => this.toggleList()}
+        onPress={() => {
+          this.toggleList();
+          this.getItem(toDoList);
+        }}
       >
         <Text style={styles.title} numberOfLines={1}>
           {listItem.name}

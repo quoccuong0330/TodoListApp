@@ -7,7 +7,7 @@ import {
   Modal,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 
 import data from "./Data";
 import TodoList from "./components/TodoList";
@@ -35,8 +35,11 @@ function App() {
     );
   };
 
-  renderTodoList = (list) => {
-    return <TodoList toDoList={list} updateList={this.updateList} />;
+  useLayoutEffect(() => {
+  });
+
+  renderTodoList = (toDoList) => {
+    return <TodoList toDoList={toDoList} updateList={this.updateList} />;
   };
   return (
     <View style={styles.container}>
@@ -50,6 +53,7 @@ function App() {
           addList={addList}
         />
       </Modal>
+
       <View style={{ flexDirection: "row" }}>
         <View style={styles.divider} />
         <Text style={styles.title}>
@@ -71,12 +75,12 @@ function App() {
 
       <View style={{ height: 275, paddingLeft: 32 }}>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.name}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={dataList}
           renderItem={({ item }) => this.renderTodoList(item)}
-          keyboardShouldPersistTaps = 'always'
+          keyboardShouldPersistTaps="always"
         />
       </View>
     </View>

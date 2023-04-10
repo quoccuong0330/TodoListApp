@@ -14,8 +14,8 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 import Colors from "../../Global/Colors";
 
-export default function TodoModal({ closeModal, listItem, updateList }) {
-  const [item, setItem] = useState(listItem);
+export default function TodoModal({ closeModal, itemModal, updateList }) {
+  const [item, setItem] = useState(itemModal);
   const [name, setName] = useState(item.name);
   const [newTodo, setNewTodo] = useState("");
   const completedCount = item.todos.filter((todo) => todo.completed).length;
@@ -94,7 +94,7 @@ export default function TodoModal({ closeModal, listItem, updateList }) {
         <View style={[styles.section, { flex: 3 }]}>
           <FlatList
             data={item.todos}
-            keyExtractor={(item) => item.name}
+            keyExtractor={(item) => item.title}
             renderItem={({ item, index }) => this.renderTodo(item, index)}
             contentContainerStyle={{
               paddingHorizontal: 32,
